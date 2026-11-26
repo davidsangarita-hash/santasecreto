@@ -1,5 +1,6 @@
 /* Santa Secreto - capa de datos.
    Expone SantaStorage.connect() -> { db, myId }  (db con la misma API que Claude: doc/collection/get/set/update/delete/onSnapshot).
+   0) Con Firebase configurado (js/firebase-config.js): salas compartidas entre cualquier dispositivo.
    1) Dentro de Claude (artifact publicado) usa la base de datos compartida real: salas multijugador.
    2) Fuera de Claude usa localStorage: sirve para probar en un solo navegador (varias pestañas).
    Para multijugador en tu propio hosting, reemplaza la parte "local" por Firebase/Supabase
@@ -12,7 +13,21 @@
     if(!(window.claude&&claude.use))return null;
     var u=await claude.use('user'), d=await claude.use('db');
     var id=u?await u.id():null;
-    return (d&&id)?{db:d,myId:id}:null;
+    return (d&&id)?{db:d,myId:id,mode:'claude'}:null;
+  }
+
+
+  /* Firebase Firestore: salas compartidas entre dispositivos (GitHub Pages, etc.) */
+  function viaFirebase(){
+    var cfg=window.FIREBASE_CONFIG;
+    if(!cfg||!window.firebase||!cfg.projectId||cfg.projectId==='PEGA_AQUI')return null;
+    try{
+      if(!firebase.apps.length)firebase.initializeApp(cfg);
+      var fs=firebase.firestore();
+      var id=null;try{id=localStorage.getItem('ss-uid');}catch(e){}
+      if(!id){id='u_'+Math.random().toString(36).slice(2,12);try{localStorage.setItem('ss-uid',id);}catch(e){}}
+      return {db:{doc:function(p){return fs.doc(p);},collection:function(p){return fs.collection(p);}},myId:id,mode:'firebase'};
+    }catch(e){return null;}
   }
 
   function viaLocal(){
@@ -46,13 +61,14 @@
     }
     var id=null;try{id=sessionStorage.getItem('ss-local-id');}catch(e){}
     if(!id){id='local_'+Math.random().toString(36).slice(2,10);try{sessionStorage.setItem('ss-local-id',id);}catch(e){}}
-    return {db:{doc:doc,collection:collection},myId:id};
+    return {db:{doc:doc,collection:collection},myId:id,mode:'local'};
   }
 
   window.SantaStorage={
     connect:async function(){
-      var c=await viaClaude();
-      return c||viaLocal();
+      var c=viaFirebase();            // 1) Firebase si está configurado
+      if(!c)c=await viaClaude();      // 2) Base de datos de Claude si se abre dentro de Claude
+      return c||viaLocal();           // 3) Modo local (un solo navegador)
     }
   };
 })();

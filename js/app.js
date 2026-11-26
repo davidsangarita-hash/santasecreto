@@ -2,7 +2,7 @@
 (function(){
   var app=document.getElementById('app');
   var db=null, myId=null, code=null, myName='', unsubs=[];
-  var roomData=null, players=[], tab='join', msg='';
+  var mode='',roomData=null, players=[], tab='join', msg='';
 
 
   function h(tag,attrs,kids){
@@ -45,6 +45,9 @@
     }});
     var saved=read('ss-name');if(saved)nameIn.value=saved;
     kids.push(go,err);
+    if(mode==='local')app.appendChild(h('div',{class:'card',style:'border-top-color:#f2c14e'},[
+      h('h2',{text:'Modo de prueba'}),
+      h('p',{class:'hint',text:'Las salas solo se ven en este navegador. Para jugar entre celulares conecta Firebase (mira LEEME.md).'})]));
     app.appendChild(h('div',{class:'card'},[
       h('h2',{text:tab==='join'?'Entra con tu código':'Eres el administrador'}),
       h('p',{class:'hint',text:tab==='join'?'Pídele el código al administrador de la sala.':'Creas la sala, compartes el código y tú inicias el sorteo.'})
@@ -167,7 +170,7 @@
   async function boot(){
     try{
       var conn=await SantaStorage.connect();
-      db=conn.db;myId=conn.myId;
+      db=conn.db;myId=conn.myId;mode=conn.mode;
       var c=read('ss-room');
       if(c){
         var snap=await db.doc('rooms/'+c+'/players/'+myId).get();
