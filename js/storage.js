@@ -18,17 +18,58 @@
 
 
   /* Firebase Firestore: salas compartidas entre dispositivos (GitHub Pages, etc.) */
-  function viaFirebase(){
-    var cfg=window.FIREBASE_CONFIG;
-    if(!cfg||!window.firebase||!cfg.projectId||cfg.projectId==='PEGA_AQUI')return null;
-    try{
-      if(!firebase.apps.length)firebase.initializeApp(cfg);
-      var fs=firebase.firestore();
-      var id=null;try{id=localStorage.getItem('ss-uid');}catch(e){}
-      if(!id){id='u_'+Math.random().toString(36).slice(2,12);try{localStorage.setItem('ss-uid',id);}catch(e){}}
-      return {db:{doc:function(p){return fs.doc(p);},collection:function(p){return fs.collection(p);}},myId:id,mode:'firebase'};
-    }catch(e){return null;}
+
+function viaFirebase(){
+  console.log("1. Iniciando conexión Firebase");
+
+  var cfg = window.FIREBASE_CONFIG;
+
+  console.log("2. Configuración:", cfg);
+  console.log("3. Firebase cargado:", typeof firebase);
+
+  if (!cfg || !window.firebase || !cfg.projectId || cfg.projectId === 'PEGA_AQUI') {
+    console.error("Firebase no está configurado correctamente.");
+    return null;
   }
+
+  try {
+    if (!firebase.apps.length) {
+      firebase.initializeApp(cfg);
+    }
+
+    var fs = firebase.firestore();
+
+    console.log("4. Firebase inicializado correctamente");
+
+    var id = null;
+    try {
+      id = localStorage.getItem('ss-uid');
+    } catch(e) {}
+
+    if (!id) {
+      id = 'u_' + Math.random().toString(36).slice(2,12);
+      try {
+        localStorage.setItem('ss-uid', id);
+      } catch(e) {}
+    }
+
+    console.log("5. Conexión Firebase preparada");
+
+    return {
+      db: {
+        doc: function(p){ return fs.doc(p); },
+        collection: function(p){ return fs.collection(p); }
+      },
+      myId: id,
+      mode: 'firebase'
+    };
+
+  } catch(e) {
+    console.error("ERROR REAL DE FIREBASE:", e);
+    return null;
+  }
+}
+
 
   function viaLocal(){
     var KEY='ss-local-db', subs=[];
