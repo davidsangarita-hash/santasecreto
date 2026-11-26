@@ -1,0 +1,42 @@
+/* Santa Secreto - animaciones */
+
+/* Nieve (las partículas las crea js/effects.js) */
+.snow{position:fixed;inset:0;pointer-events:none;z-index:0}
+.snow i{position:absolute;top:-10px;width:var(--s);height:var(--s);border-radius:50%;background:#fff;opacity:.7;
+  left:var(--x);animation:fall var(--d) linear infinite;animation-delay:var(--l)}
+@keyframes fall{to{transform:translateY(105vh) translateX(30px)}}
+
+/* Gorro que se balancea */
+.hat{display:inline-block;transform-origin:50% 90%;animation:wobble 3.2s ease-in-out infinite}
+@keyframes wobble{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+
+/* Título con brillo dorado en la palabra Secreto */
+h1 span{background:linear-gradient(90deg,var(--gold),#fff4c9,var(--gold));background-size:200% 100%;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shine 4s linear infinite}
+@keyframes shine{to{background-position:-200% 0}}
+
+/* Las tarjetas aparecen al cambiar de pantalla */
+.card{animation:pop .35s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes pop{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
+
+/* Código de sala con latido suave */
+.roomcode b{display:inline-block;animation:beat 2.4s ease-in-out infinite}
+@keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+
+/* Jugadores que entran a la sala */
+li.p{animation:slidein .3s ease-out}
+@keyframes slidein{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+
+/* Regalo que se sacude en la pantalla de resultado */
+.gift{display:block;animation:shake 2.6s ease-in-out infinite}
+@keyframes shake{0%,70%,100%{transform:rotate(0)}74%{transform:rotate(-10deg)}78%{transform:rotate(10deg)}82%{transform:rotate(-8deg)}86%{transform:rotate(8deg)}90%{transform:rotate(0)}}
+
+/* Confeti al descubrir el nombre */
+.confetti{position:fixed;top:-20px;z-index:9;pointer-events:none;font-size:var(--z);left:var(--x);
+  animation:confetti var(--d) ease-in forwards}
+@keyframes confetti{to{transform:translate(var(--dx),105vh) rotate(var(--r));opacity:.9}}
+
+@media (prefers-reduced-motion:reduce){
+  .snow,.confetti{display:none}
+  .hat,h1 span,.card,.roomcode b,li.p,.gift{animation:none}
+}

@@ -1,0 +1,50 @@
+/* Santa Secreto - estilos base (layout, colores, tipografía) */
+:root{--pine:#0f3d2e;--pine-dark:#082a1f;--berry:#c8283d;--berry-dark:#9e1c2e;--gold:#f2c14e;--snow:#fbfbf8;--ink:#16241e;--mist:#dfe9e3;--soft:#4b5f55;
+--display:'Fraunces',Georgia,serif;--body:'Nunito','Segoe UI',system-ui,sans-serif;color-scheme:dark}
+*{box-sizing:border-box;margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{font-family:var(--body);color:var(--snow);min-height:100vh;
+ background:radial-gradient(1200px 600px at 50% -10%,#1d5a43 0%,var(--pine) 45%,var(--pine-dark) 100%) fixed;
+ padding:calc(32px + env(safe-area-inset-top,0px)) 18px calc(60px + env(safe-area-inset-bottom,0px));overflow-x:hidden}
+main{position:relative;z-index:1;max-width:560px;margin:0 auto}
+header{text-align:center;margin-bottom:24px}
+.hat{font-size:52px;line-height:1}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(42px,11vw,64px);letter-spacing:-.02em;margin-top:6px}
+h1 span{color:var(--gold);font-style:italic;font-weight:600}
+.tag{margin-top:8px;color:var(--mist);font-size:17px}
+.card{background:var(--snow);color:var(--ink);border-radius:22px;padding:24px;box-shadow:0 20px 50px rgba(0,0,0,.35);border-top:6px solid var(--berry);margin-bottom:18px}
+h2{font-family:var(--display);font-size:24px;margin-bottom:6px}
+.hint{color:var(--soft);font-size:15px;margin-bottom:14px}
+label{display:block;font-weight:800;font-size:14px;margin:14px 0 6px;color:var(--pine)}
+input{width:100%;font:inherit;font-size:17px;padding:13px 15px;border-radius:14px;border:2px solid var(--mist);background:#fff;color:var(--ink)}
+input:focus{outline:none;border-color:var(--pine)}
+input.code{text-transform:uppercase;letter-spacing:.3em;text-align:center;font-weight:800}
+button{font:inherit;font-weight:800;cursor:pointer;border:0;border-radius:14px;padding:14px 20px;transition:transform .12s,background .2s}
+button:active{transform:scale(.97)}
+button:focus-visible,.secret:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.main{background:var(--berry);color:#fff;width:100%;font-size:18px;margin-top:18px}
+.main:hover:not(:disabled){background:var(--berry-dark)}
+.main:disabled{background:#c9c9c4;cursor:not-allowed}
+.alt{background:var(--pine);color:#fff;width:100%;font-size:18px;margin-top:18px}
+.alt:hover{background:var(--pine-dark)}
+.ghost{background:transparent;color:var(--berry-dark);width:100%;margin-top:8px}
+.err{color:var(--berry-dark);font-weight:700;font-size:14px;min-height:20px;margin-top:10px}
+.tabs{display:flex;gap:8px;margin-bottom:6px}
+.tabs button{flex:1;background:var(--mist);color:var(--pine)}
+.tabs button.on{background:var(--pine);color:#fff}
+.roomcode{text-align:center;background:var(--pine);color:#fff;border-radius:18px;padding:16px;margin:8px 0 16px}
+.roomcode small{display:block;color:var(--mist);font-size:14px}
+.roomcode b{font-family:var(--display);font-size:44px;letter-spacing:.18em;color:var(--gold)}
+.roomcode button{background:rgba(255,255,255,.14);color:#fff;margin-top:8px;padding:8px 16px;font-size:14px}
+ul{list-style:none;padding:0;display:grid;gap:8px}
+li.p{display:flex;align-items:center;justify-content:space-between;background:var(--mist);padding:11px 14px;border-radius:14px;font-weight:700}
+li.p em{font-style:normal;font-size:13px;color:var(--soft);font-weight:600;margin-left:8px}
+li.p button{background:#fff;color:var(--berry-dark);padding:4px 11px;border-radius:50%}
+.wait{text-align:center;color:var(--soft);font-weight:600;margin-top:16px}
+.gift{font-size:64px;text-align:center;margin:6px 0}
+.reveal{text-align:center}
+.secret{font-family:var(--display);font-weight:800;font-size:clamp(36px,11vw,52px);color:var(--berry);word-break:break-word;filter:blur(14px);transition:filter .35s;cursor:pointer;user-select:none;margin:8px 0}
+.secret.open{filter:none}
+.tap{font-size:14px;color:#6a7c72;min-height:20px}
+.hidden{display:none}
+footer{text-align:center;color:var(--mist);font-size:14px;opacity:.85}
