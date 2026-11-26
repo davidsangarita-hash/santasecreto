@@ -1,8 +1,6 @@
-/* Pega aquí la configuración de tu proyecto de Firebase (ver instrucciones en LEEME.md).
-   Mientras tenga "PEGA_AQUI", el juego funciona solo en un navegador (modo local). */
 window.FIREBASE_CONFIG = {
-  apiKey: "PEGA_AQUI",
-  authDomain: "PEGA_AQUI",
-  projectId: "PEGA_AQUI",
-  appId: "PEGA_AQUI"
+  apiKey: "AIzaSyCG3WyqVzn0l6KhoNGz8AmTplWEisB2Tqs",
+  authDomain: "santasecreto-fcaf0.firebaseapp.com",
+  projectId: "santasecreto-fcaf0",
+  appId: "1:133260671584:web:f4eef5755110bffc40e105"
 };
